@@ -15,11 +15,12 @@ app.use(express.json());
 
 // Routes //
 const routes = [ 
-    require('../routes/user/user.router') 
+    require('../routes/user/user.router'),
+    require('../routes/search/search.router')
 ]
 
 // Iniciando a conexao com o MongoDB //
-let startMongo = new Promise(async (resolve, reject) => {
+const startMongo = new Promise(async (resolve, reject) => {
     try {
         await mongoose.connect(`${ environment.MONGO.URI }${ environment.MONGO.HOST }/${ environment.MONGO.DATABASE }`, {
             useNewUrlParser: true,
@@ -35,7 +36,7 @@ let startMongo = new Promise(async (resolve, reject) => {
 });
 
 // Iniciando o servidor HTTP //
-let startServer = new Promise((resolve, reject) => {
+const startServer = new Promise((resolve, reject) => {
     try {
         
         // Creating the server HTTP //
@@ -61,7 +62,7 @@ let startServer = new Promise((resolve, reject) => {
 });
 
 // Initial //
-let start = new Promise((resolve, reject) => {
+const start = new Promise((resolve, reject) => {
     try {
         startMongo.then(() => {
             // Conexao com o Banco de dados funcionou //

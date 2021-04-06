@@ -8,7 +8,7 @@ const UserRouterCommon = require('./user.router.common');
 
 class UserRouter extends UserRouterCommon {
 
-    async startRouter(app) {
+    startRouter(app) {
 
         // Buscar todos os usuários cadastrados //
         route.get('/api/users', this.findAll);
