@@ -18,6 +18,7 @@ module.exports = {
     MONGO: {
         URI: process.env.MONGO_URI || 'mongodb://',
         HOST: process.env.MONGO_HOST || 'localhost',
+        PORT: process.env.MONGO_PORT || '27017',
         DATABASE: process.env.MONGO_DATABASE || 'idownload'
     },
 
@@ -29,5 +30,11 @@ module.exports = {
         DEFAULT_PAGE_NUMBER: 1,
         DEFAULT_PAGE_SIZE: 10,
         DEFAULT_AUTO_CORRECT: true
+    },
+
+    SECURITY: {
+        SALT_ROUNDS: process.env.SALT_ROUNDS || 10,
+        SECRET_KEY: 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3',
+        ALGORITHM: 'aes-256-ctr'
     }
 }

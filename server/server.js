@@ -20,62 +20,70 @@ const routes = [
 ]
 
 // Iniciando a conexao com o MongoDB //
-const startMongo = new Promise(async (resolve, reject) => {
-    try {
-        await mongoose.connect(`${ environment.MONGO.URI }${ environment.MONGO.HOST }/${ environment.MONGO.DATABASE }`, {
+const startMongo = () => {
+    return new Promise((resolve, reject) => {
+        
+        // Iniciando a conexão com o MongoDB
+        mongoose.connect(`${ environment.MONGO.URI }${ environment.MONGO.HOST }:${ environment.MONGO.PORT }/${ environment.MONGO.DATABASE }`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
             useCreateIndex: true
-        });
+        })
 
-        resolve(true);
-    } catch (err) {
-        reject(err);
-    }
-});
+        // Conexão com o MongoDB foi feita com sucesso //
+        .then(res => resolve(res))
 
-// Iniciando o servidor HTTP //
-const startServer = new Promise((resolve, reject) => {
-    try {
-        
-        // Creating the server HTTP //
+        // Ocorreu um erro na conexão com o MongoDB //
+        .catch(err => reject(err));
+    });
+}
+
+const startServer = () => {
+    return new Promise((resolve, reject) => {
+        // Criando o servidor HTTP //
         const server = http.createServer(app);
         
-        // Listening... //
+        // Atribuindo a porta ao servidor //
         server.listen(environment.SERVER.PORT);
 
-        // Starting the routes //
+        // Iniciando as rotas //
         for (var i in routes) {
             const route = routes[i];
             route.startRouter(app);
         }
 
-        // Started //
+        // Servidor iniciado com sucesso //
         server.on('listening', () => {
             resolve(true);
-            console.log(`Server is started and listening the port ${ environment.SERVER.PORT }.`);
+            console.log(`Servidor está iniciado e escutando a porta ${ environment.SERVER.PORT }.`);
         });
-    } catch (err) {
-        reject(err);
-    }
-});
+        
+        // Ocorreu um erro ao iniciar o servidor //
+        server.on('error', err => reject(err));
+    });
+}
 
-// Initial //
-const start = new Promise((resolve, reject) => {
-    try {
-        startMongo.then(() => {
-            // Conexao com o Banco de dados funcionou //
+const start = () => {
+    return new Promise((resolve, reject) => {
+        return startMongo()
 
-            startServer.then(() => {
+        // Sucesso ao conectar ao banco de dados //
+        .then(() => {
 
-                // Servidor HTTP iniciado com sucesso, retornando um valor true para a funcao.
-                resolve(true);
-            }).catch(err => reject(err));
-        }).catch(err => reject(err));
-    } catch (err) {
-        reject(err);
-    }
-});
+            // Iniciando o servidor //
+            startServer()
+
+            // Sucesso ao iniciar o servidor HTTP //
+            .then(() => resolve(true))
+
+            // Ocorreu um erro ao iniciar o servidor HTTP //
+            .catch(err => reject(err));
+        })
+
+        // Ocorreu um erro ao iniciar a conexão ao banco de dados //
+        .catch(err => reject(err))
+    })
+}
 
 module.exports = { start };

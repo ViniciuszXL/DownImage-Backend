@@ -6,6 +6,7 @@ const userModel = require('./user.model');
 
 // Utilitaries //
 const environment = require('../../common/environment');
+const crypto = require('../../common/crypto/crypto');
 
 class UserRouterCommon extends Router {
 
@@ -88,17 +89,84 @@ class UserRouterCommon extends Router {
 
         // Verificando se existe o usuário //
         userModel.find({ username: username })
-            .then(res => {
-                if (!res.length) {
-                    return this.parseError(resp, { code: environment.CODE.NOT_FOUND, message: 'Usuário não encontrado no banco de dados!' });
-                }
+        
+        // Sucesso ao buscar o usuário no banco de dados //
+        .then(res => {
 
-                // Deletando o usuário do banco de dados //
-                userModel.deleteOne({ username: username })
-                    .then(this.parseSuccess(resp, { message: 'Usuário deletado com sucesso!', hasResponse: false }))
-                    .catch(this.parseErrorThen(resp));
-            })
+            // Usuário não existe //
+            if (!res.length) {
+                return this.parseError(resp, { code: environment.CODE.NOT_FOUND, message: 'Usuário não encontrado no banco de dados!' });
+            }
+
+            // Deletando o usuário do banco de dados //
+            userModel.deleteOne({ username: username })
+
+            // Usuário deletado com sucesso //
+            .then(this.parseSuccess(resp, { message: 'Usuário deletado com sucesso!', hasResponse: false }))
+
+            // Ocorreu um erro ao deletar o usuário do banco de dados //
             .catch(this.parseErrorThen(resp));
+        })
+
+        // Ocorreu um erro ao buscar o usuário no banco de dados //
+        .catch(this.parseErrorThen(resp));
+    }
+
+    // Função para atualizar o usuário //
+    update = (req, resp) => {
+        const { username } = req.params;
+        const options = {
+            overtwrite: true
+        }
+
+        // Função para atualizar as informações do usuário //
+        userModel.updateOne({ username: username }, req.body, options).exec()
+        
+        .then(res => {
+            if (res.n) {
+                return userModel.find({ username: username });
+            } else {
+                return this.parseError(resp, { code: environment.CODE.NOT_FOUND, message: 'Usuário não encontrado no banco de dados!' });
+            }
+        })
+
+        .then(this.parseSuccess(resp, { message: 'Foi modificado com sucesso as informações do usuário!', hasResponse: true }))
+
+        .catch(this.parseErrorThen(resp));
+    };
+
+    // Função para logar o usuário //
+    login = (req, resp) => {
+        const { username } = req.params;
+        const { password } = req.body;
+
+        // Função para verificar se existe um usuário ou não //
+        userModel.find({ username: username })
+
+        // Função foi executada com sucesso. //
+        .then(res => {
+            // Usuário não existe //
+            if (!res.length) {
+                return this.parseError(resp, { code: environment.CODE.NOT_FOUND, message: 'Usuário não encontrado no banco de dados!' });
+            }
+
+            const data = res[0];
+            const userPassword = data.password.split(';');
+            const passwordDecrypted = crypto.decrypt(userPassword[0], userPassword[1]);
+
+            // A senha informada não é igual a cadastrada! //
+            if (password !== passwordDecrypted) {
+                return this.parseError(resp, { code: environment.CODE.NOT_ALLOWED, message: 'Senha informada está incorreta!' });
+            }
+
+            return true;
+        })
+
+        // Retornado dizendo que a senha está correta e que o usuário foi logado com sucesso //
+        .then(this.parseSuccess(resp, { message: 'Logado com sucesso!', hasResponse: false }))
+
+        // Ocorreu um erro na função //
+        .catch(this.parseErrorThen(resp));
     }
 
 }

@@ -8,6 +8,7 @@ const UserRouterCommon = require('./user.router.common');
 
 class UserRouter extends UserRouterCommon {
 
+    // Início da rota //
     startRouter(app) {
 
         // Buscar todos os usuários cadastrados //
@@ -21,6 +22,12 @@ class UserRouter extends UserRouterCommon {
 
         // Deletando um usuário //
         route.delete('/api/users/:username', this.delete);
+
+        // Atualizando um usuário //
+        route.put('/api/users/:username', this.update);
+
+        // Logando um usuário //
+        route.post('/api/users/login/:username', this.login);
 
         // Função que faz com que a rota seja aplicada no servidor web //
         app.use(route);

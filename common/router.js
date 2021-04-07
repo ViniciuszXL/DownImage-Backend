@@ -4,13 +4,13 @@ class Router {
 
     parseSuccess = (resp, values) => {
         return (document) => {
-            const hasResponse = values ? values.hasResponse != undefined && !values.hasResponse : true;
+            const hasResponse = values ? values.hasResponse != undefined ? values.hasResponse : true : true;
             if (!document) {
                 this.parseMessage(resp, { code: environment.CODE.INTERN, success: false, message: 'Não foi retornado nenhum valor para ser mostrado.' });
             } else {
                 this.parseMessage(resp, { 
                     code: environment.CODE.SUCCESS, success: true, 
-                    response: hasResponse ? undefined : values.response != undefined ? values.response : document ? document : undefined,
+                    response: hasResponse ? values ? values.response != undefined ?  values.response : document : document : undefined,
                     message: values ? values.message : undefined,
                     isImage: values ? values.isImage : undefined
                 });

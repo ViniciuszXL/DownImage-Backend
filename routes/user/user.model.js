@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 
+// Environment //
+const environment = require('../../common/environment');
+
+// Crypto //
+const crypto = require('../../common/crypto/crypto');
+
 // Criando o modelo dos usuarios //
 const userSchema = new mongoose.Schema({ 
     username: {
@@ -20,5 +26,40 @@ const userSchema = new mongoose.Schema({
     }
 
 });
+
+const hashPassword = (obj, next) => {
+    try {
+        const password = obj.password;
+        const passwordEncrypted = crypto.encrypt(password);
+        obj.password = passwordEncrypted;
+    } catch (err) {
+        console.error(err);
+        next();
+    } finally {
+        next();
+    }
+}
+
+// Middleware //
+const save = function (next) {
+    const user = this;
+    if (!user.isModified('password')) {
+        next();
+    } else {
+        hashPassword(user, next);
+    }
+}
+
+const update = function (next) {
+    if (!this.getUpdate().password) {
+        next();
+    } else {
+        hashPassword(this.getUpdate(), next);
+    }
+}
+
+userSchema.pre('save', save);
+userSchema.pre('findOneAndUpdate', update);
+userSchema.pre('updateOne', update);
 
 module.exports = mongoose.model('user', userSchema);
