@@ -77,11 +77,9 @@ Body de exemplo:
 ```
 
 PARÂMETROS ACEITOS: `username`, `name`, `email` e `password`.
-
 ### -- ANTES -- ###
 
 ![](/assets/GET_USERS_CALLBACK.png)
-
 ### -- DEPOIS -- ###
 
 ![](/assets/PUT_USERS_CALLBACK.png)
