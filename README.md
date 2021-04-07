@@ -29,3 +29,10 @@ Segundo, é necessário ter o `MongoDB` instalado em sua máquina para que ele f
 Após ter feito os dois primeiros passos, abra um cmd na pasta clonada, digite `nodemon main.js` (Caso você tenha o nodemon instalado) ou `node main.js`.
 
 O servidor irá escutar a porta `3030` por padrão, e uma mensagem como `Sucessfully starting the server!!` deverá aparecer após iniciá-lo.
+
+## Rotas ##
+
+### User ###
+
+`GET` - `/api/users`: Retorna todos os usuários cadastrados no banco de dados
+![](/assets/GET_USERS_CALLBACK.png)
