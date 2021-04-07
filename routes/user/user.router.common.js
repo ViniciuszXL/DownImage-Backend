@@ -114,7 +114,10 @@ class UserRouterCommon extends Router {
 
     // Função para atualizar o usuário //
     update = (req, resp) => {
+        // Pegando o nome de usuário na URL //
         const { username } = req.params;
+
+        // Opções para o Mongoose //
         const options = {
             overtwrite: true
         }
@@ -122,22 +125,31 @@ class UserRouterCommon extends Router {
         // Função para atualizar as informações do usuário //
         userModel.updateOne({ username: username }, req.body, options).exec()
         
+        // Função retornou algum valor //
         .then(res => {
+
+            // Modificado com sucesso //
             if (res.n) {
                 return userModel.find({ username: username });
-            } else {
-                return this.parseError(resp, { code: environment.CODE.NOT_FOUND, message: 'Usuário não encontrado no banco de dados!' });
             }
+
+            // Não foi encontrado o usuário //
+            return this.parseError(resp, { code: environment.CODE.NOT_FOUND, message: 'Usuário não encontrado no banco de dados!' });
         })
 
+        // Informando os novos valores do usuário //
         .then(this.parseSuccess(resp, { message: 'Foi modificado com sucesso as informações do usuário!', hasResponse: true }))
 
+        // Ocorreu um erro no início da função //
         .catch(this.parseErrorThen(resp));
     };
 
     // Função para logar o usuário //
     login = (req, resp) => {
+        // Pegando o nome do usuário na URL //
         const { username } = req.params;
+
+        // Pegando a senha do usuário no BODY //
         const { password } = req.body;
 
         // Função para verificar se existe um usuário ou não //
@@ -150,8 +162,13 @@ class UserRouterCommon extends Router {
                 return this.parseError(resp, { code: environment.CODE.NOT_FOUND, message: 'Usuário não encontrado no banco de dados!' });
             }
 
+            // Pegando os dados do usuário //
             const data = res[0];
+
+            // Senha do usuário cadastrado e está salvo no banco de dados //
             const userPassword = data.password.split(';');
+
+            // Decriptando a senha encriptada para comparação de valores //
             const passwordDecrypted = crypto.decrypt(userPassword[0], userPassword[1]);
 
             // A senha informada não é igual a cadastrada! //
@@ -159,6 +176,7 @@ class UserRouterCommon extends Router {
                 return this.parseError(resp, { code: environment.CODE.NOT_ALLOWED, message: 'Senha informada está incorreta!' });
             }
 
+            // Senha informada está correta! //
             return true;
         })
 
