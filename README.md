@@ -32,7 +32,63 @@ O servidor irá escutar a porta `3030` por padrão, e uma mensagem como `Sucessf
 
 ## Rotas ##
 
-### User ###
+### -- ROTA USER -- ##
 
-`GET` - `/api/users`: Retorna todos os usuários cadastrados no banco de dados
+`GET` - `/api/users` - Retorna em uma array, todos os usuários cadastrados no banco de dados;
+
 ![](/assets/GET_USERS_CALLBACK.png)
+
+`GET` - `/api/users/:username` - Retorna em uma array, o usuário pesquisado pela query `:username`. Exemplo: `/api/users/ViniciuszXL`;
+
+![](/assets/GET_USERS_CALLBACK.png)
+
+`POST` - `/api/users` - Cadastra um novo usuário e retorna o usuário em uma array;
+
+Body de exemplo:
+```
+    {
+        "username": "ViniciuszXL",
+        "name": "Marcus Mendonça",
+        "password": "Vini123@",
+        "email": "eu@marcus.com"
+    }
+```
+
+CAMPOS NECESSÁRIOS: `username`, `name`, `password` e `email`;
+
+![](/assets/POST_USERS.png)
+
+`DEL / DELETE` - `/api/users/:username` - Deleta um usuário informando o nome de usuário;
+
+![](/assets/DELETE_USERS.png)
+
+`PUT` - `/api/users/:username` - Atualiza as informações de um usuário e retornará com as informações novas;
+
+Body de exemplo:
+```
+    {
+        "password": "Senha123@",
+        "email": "eu_2@marcus.com"
+    }
+```
+
+#### -- ANTES -- ###
+
+![](/assets/GET_USERS_CALLBACK.png)
+
+### -- DEPOIS -- ###
+
+![](/assets/PUT_USERS_CALLBACK.png)
+
+`POST` - `/api/users/login/:username` - Rota para verificar se a senha informada na hora do login é a mesma cadastrada;
+
+Body de exemplo:
+```
+    {
+        "password": "1234@1"
+    }
+```
+
+CAMPOS NECESSÁRIOS: `password`.
+
+![](/assets/POST_LOGIN_USER_CALLBACK.png)

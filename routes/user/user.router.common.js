@@ -49,7 +49,7 @@ class UserRouterCommon extends Router {
         .then(res => {
             // Já existe um usuário cadastrado com esse nome de usuário //
             if (res.length) {
-                return this.parseError(reps, { message: 'Já existe um usuário cadastrado com esse nome de usuário.' });
+                return this.parseError(resp, { message: 'Já existe um usuário cadastrado com esse nome de usuário.' });
             }
 
             // Buscar se já existe um email cadastrado //
