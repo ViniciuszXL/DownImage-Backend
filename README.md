@@ -107,6 +107,6 @@ Queries aceitas:
     "pageSize": INTEIRO - Quantidade de itens que serão mostrados por página
 ```
 
-Exemplo de requisição: `/api/search/Naruto Shippudden` (Não é necessário converter os espaços para %20, ou vice-versa)
+Exemplo de requisição: `/api/search/Naruto Shippudden?pageNumber=1&pageSize=2` (Não é necessário converter os espaços para %20, ou vice-versa)
 
 ![](/assets/GET_SEARCH_CALLBACK.png)
