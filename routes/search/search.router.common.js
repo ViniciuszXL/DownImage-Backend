@@ -1,5 +1,4 @@
 const axios = require('axios');
-const cheerio = require('cheerio');
 
 // Router //
 const Router = require('../../common/router');
