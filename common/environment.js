@@ -22,6 +22,15 @@ module.exports = {
         DATABASE: process.env.MONGO_DATABASE || 'idownload'
     },
 
+    FLICKR: {
+        URI: 'https://www.flickr.com/search/?text='
+    },
+
+    IMGUR: {
+        BASE: 'https://imgur.com',
+        SEARCH: 'https://imgur.com/search/score/all',
+    },
+
     WEB_SEARCH: {
         URI: 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI',
         KEY: '10386e043emsh120ecdda4db4d89p11dd7cjsn81a90f9016a0',
