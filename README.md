@@ -14,7 +14,7 @@ Backend para a aplicação de download de imagens feito para a disciplina de pro
 
 Este é um projeto backend de uma aplicação que faz download de imagens na internet por parâmetros informados na hora da requisição.
 
-Sua função é exclusivamente para isso, tendo em vista utilizando-se uma API pública e grátis, para que seja possível buscar em um banco de dados enorme, essas tais imagens correspondentes. 
+Sua função é exclusivamente para isso, utilizando a URL de pesquisa do Imgur, e, acessando a galeria que posteriormente retorne as imagens presentes nela. Para assim, não somente mostrar apenas um resultado da pesquisa, e sim toda a galeria do qual foi mostrado para o programa na hora de pesquisar.
 
 ## Mudança de valores ##
 
