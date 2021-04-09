@@ -38,7 +38,7 @@ O servidor irá escutar a porta `3030` por padrão, e uma mensagem como `Sucessf
 
 ![](/assets/GET_USERS_CALLBACK.png)
 
--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 `GET` - `/api/users/:username` - Retorna em uma array o usuário pesquisado;
 
@@ -46,7 +46,7 @@ Exemplo de url: `/api/users/ViniciuszXL`
 
 ![](/assets/GET_USERS_CALLBACK.png)
 
--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 `POST` - `/api/users` - Cadastra um novo usuário e retorna o usuário em uma array;
 
@@ -64,7 +64,7 @@ CAMPOS NECESSÁRIOS: `username`, `name`, `password` e `email`;
 
 ![](/assets/POST_USERS.png)
 
--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 `DEL / DELETE` - `/api/users/:username` - Deleta um usuário informando o nome de usuário;
 
@@ -72,7 +72,7 @@ Exemplo de url: `/api/users/ViniciuszXL`
 
 ![](/assets/DELETE_USERS.png)
 
--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 `PUT` - `/api/users/:username` - Atualiza as informações de um usuário e retornará com as informações novas;
 
@@ -92,7 +92,7 @@ PARÂMETROS ACEITOS: `username`, `name`, `email` e `password`.
 
 ![](/assets/PUT_USERS_CALLBACK.png)
 
--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 `POST` - `/api/users/login/:username` - Rota para verificar se a senha informada na hora do login é a mesma cadastrada;
 
@@ -107,7 +107,7 @@ CAMPOS NECESSÁRIOS: `password`.
 
 ![](/assets/POST_LOGIN_USER_CALLBACK.png)
 
--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 ### -- ROTA SEARCH -- ###
 
@@ -122,7 +122,7 @@ Exemplo de requisição: `/api/search/Eren Jeager?limit=1` (Não é necessário 
 
 ![](/assets/GET_SEARCH_CALLBACK.png)
 
--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 Requisição antes de fazer cache: 25s - 40s
 
