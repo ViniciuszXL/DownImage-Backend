@@ -49,15 +49,27 @@ class Router {
             }
         }
 
-        const parseImages = (images) => {
+        const parseImages = (response) => {
             const result = [];
 
             try {
-                for (var i in images) {
-                    const image = images[i];
-                    const { url, height, width, thumbnail, name, title } = image;
-                    result.push({ url: url, height: height, width: width, thumbnail: thumbnail, name: name, title: title });
+                for (var i in response) {
+                    const data = JSON.parse(response[i]);
+                    const { id, title, description, view_count, upvote_count, downvote_count, score, created_at, privacy, media } = data;
+                    const images = [];
+    
+                    for (var i in media) {
+                        const mediaData = media[i];
+                        const { id, type, name, basename, url, width, height, size, created_at, metadata } = mediaData;
+                        const { title } = metadata;
+                        
+                        images.push({ id: id, type: type, name: name, basename: basename, url: url, width: width, height: height, size: size, created_at: created_at, title: title })
+                    }
+
+                    result.push({ id: id, title: title, description: description, view: view_count, upvote: upvote_count, downvote: downvote_count, score: score, created_at: created_at, privacy: privacy, images: images })
                 }
+            } catch (err) {
+                console.error(err);
             } finally {
                 return result;
             }
