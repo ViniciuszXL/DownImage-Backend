@@ -109,3 +109,7 @@ Queries aceitas:
 Exemplo de requisição: `/api/search/Eren Jeager?limit=1` (Não é necessário converter os espaços para %20, ou vice-versa)
 
 ![](/assets/GET_SEARCH_CALLBACK.png)
+
+Requisição antes de fazer cache: 25s - 40s
+
+Requisição após ter feito cache de alguns resultados: 500ms - 10s
