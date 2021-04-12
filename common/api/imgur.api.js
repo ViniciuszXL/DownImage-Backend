@@ -2,7 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 // Environment //
-const environment = require('../../environment');
+const environment = require('../environment');
 
 // Model //
 const imgurModel = require('./imgur.api.model');

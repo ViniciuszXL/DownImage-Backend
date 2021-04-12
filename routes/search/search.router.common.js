@@ -27,7 +27,7 @@ class SearchRouterCommon extends Router {
         .catch(this.parseErrorThen(resp));
     }
 
-    // Função de buscar imagens //
+    // Função de buscar imagens (NAO USADO) //
     search = (req, resp) => {
         const { tags } = req.params;
         const { pageSize, pageNumber } = req.query;

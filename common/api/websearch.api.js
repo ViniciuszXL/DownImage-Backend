@@ -3,6 +3,7 @@ const axios = require('axios');
 // Environment //
 const environment = require('../environment');
 
+// NAO USADO //
 class WebSearchAPI {
 
     searchImages = (values) => {
