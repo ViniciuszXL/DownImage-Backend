@@ -22,10 +22,6 @@ module.exports = {
         DATABASE: process.env.MONGO_DATABASE || 'idownload'
     },
 
-    FLICKR: {
-        URI: 'https://www.flickr.com/search/?text='
-    },
-
     IMGUR: {
         BASE: 'https://imgur.com',
         SEARCH: 'https://imgur.com/search/score/all',

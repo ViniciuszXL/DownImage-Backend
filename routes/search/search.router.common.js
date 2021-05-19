@@ -5,7 +5,7 @@ const Router = require('../../common/router');
 
 // API //
 const WebSearchAPI = require('../../common/api/websearch.api');
-const ImgurAPI = require('../../common/api/imgur/imgur.api');
+const ImgurAPI = require('../../common/api/imgur.api');
 const environment = require('../../common/environment');
 
 class SearchRouterCommon extends Router {
